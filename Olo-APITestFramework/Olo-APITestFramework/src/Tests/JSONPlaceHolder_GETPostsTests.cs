@@ -5,6 +5,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Olo_APITestFramework.src.Models;
+using Olo_APITestFramework.src.Helpers; 
 using System.Collections.Generic;
 
 namespace Olo_APITestFramework
@@ -12,17 +13,19 @@ namespace Olo_APITestFramework
     [TestClass]
     public class JSONPlaceHolder_GETPostsTests
     {
-              
+        private string getAllPostsRoute = "posts";
+        private string getOnePostRoute = "posts/{0}";
+        
         [TestMethod]
         public void GetAllPosts_ShouldReturn200_ShouldReturn100PostObjects()
         {
-            RestClient client = new RestClient("https://jsonplaceholder.typicode.com/");
-            RestRequest request = new RestRequest("posts");
-            var response = client.Get(request);
+            //RestClient client = new RestClient("https://jsonplaceholder.typicode.com/");
+            RestRequest request = new RestRequest(getAllPostsRoute);
+            var response = AssemblyHelper.AUTRestClients["JSONPlaceHolder"].Get(request);
 
             List<JSONPlaceHolderPostResponse> postsList = JsonConvert.DeserializeObject<List<JSONPlaceHolderPostResponse>>(response.Content);
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
-            postsList.Count.Should().Be(100, "because JSONPlaceHolder get all always returns 100 elements");
+            postsList.Count.Should().Be(100, "because JSONPlaceHolder get all always returns 100 response objects");
             //Could do more assertions here based on AC of specific GetAll call API
      
         }
