@@ -25,6 +25,11 @@ namespace Olo_APITestFramework.src.Helpers
 		public static void Initialize(TestContext context)
         {
 			AUTRestClients = CreateRestSharpClientsForUrls(_appUnderTestURLs);
+			Console.WriteLine("Initializing RestClients");
+			foreach (var client in AUTRestClients){
+				Console.WriteLine(string.Format("RestClient create with BaseURL: {0}, Key: {1} ", client.Value.BaseUrl, client.Key));
+			}
+			
         }
 
 

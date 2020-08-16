@@ -30,6 +30,7 @@ namespace Olo_APITestFramework.src.ServiceClients
         public async Task<JSONPlaceHolderGetAllPostsResponse> GetAllPosts()
         {
             RestRequest request = new RestRequest(getAllPostsRoute);
+            Console.WriteLine(string.Format("Calling JsonPlaceHolder GetAllPosts at: {0}/{1} ", _restClient.BaseUrl, request.Resource));
             var response = await _restClient.ExecuteGetAsync<List<JSONPlaceHolderPost>>(request);
 
             return new JSONPlaceHolderGetAllPostsResponse
@@ -42,6 +43,8 @@ namespace Olo_APITestFramework.src.ServiceClients
         public async Task<JSONPlaceHolderGetOnePostResponse> GetOnePost(string postId)
         {
             RestRequest request = new RestRequest(string.Format(getOnePostRoute, postId));
+            Console.WriteLine(
+                string.Format("Calling JsonPlaceHolder GetOnePost with id {0} at: {1}/{2} ", postId, _restClient.BaseUrl, request.Resource));
             var response = await _restClient.ExecuteGetAsync<JSONPlaceHolderPost>(request);
 
             return new JSONPlaceHolderGetOnePostResponse

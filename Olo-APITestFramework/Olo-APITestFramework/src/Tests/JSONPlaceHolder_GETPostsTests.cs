@@ -32,7 +32,7 @@ namespace Olo_APITestFramework
             JSONPlaceHolderGetAllPostsResponse response = await _jsonPlaceHolderServiceClient.GetAllPosts();
 
             //Assert
-            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call returned 200");
             response.postObjectList.Count.Should().Be(100, "because JSONPlaceHolder get all always returns 100 response objects");
             
             //Could do more assertions here based on AC of specific GetAll call API
@@ -42,10 +42,14 @@ namespace Olo_APITestFramework
         [TestMethod]
         public async Task GetOnePost_ShouldReturn200_ShouldReturnDesiredPostObject()
         {
+            //Arrange
+              // N/A
+            
+            //Act
             JSONPlaceHolderGetOnePostResponse response = await _jsonPlaceHolderServiceClient.GetOnePost("72");
 
             //Assert
-            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call returned 200");
             response.postObject.userId.Should().Be(8, "because we expect post id 72 has a userID value of 8");
             response.postObject.id.Should().Be(72, "because we expect post id 72 has a id value of 72");
             response.postObject.title.Should().Be("sint hic doloribus consequatur eos non id", "because we expect this title string value for post id 72");
