@@ -5,7 +5,8 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Olo_APITestFramework.src.Models;
-using Olo_APITestFramework.src.Helpers; 
+using Olo_APITestFramework.src.Helpers;
+using Olo_APITestFramework.src.ServiceClients;
 using System.Collections.Generic;
 
 namespace Olo_APITestFramework
@@ -13,36 +14,42 @@ namespace Olo_APITestFramework
     [TestClass]
     public class JSONPlaceHolder_GETPostsTests
     {
-        private string getAllPostsRoute = "posts";
-        private string getOnePostRoute = "posts/{0}";
-        
-        [TestMethod]
-        public void GetAllPosts_ShouldReturn200_ShouldReturn100PostObjects()
-        {
-            //RestClient client = new RestClient("https://jsonplaceholder.typicode.com/");
-            RestRequest request = new RestRequest(getAllPostsRoute);
-            var response = AssemblyHelper.AUTRestClients["JSONPlaceHolder"].Get(request);
+        private static JSONPlaceHolderServiceClient _jsonPlaceHolderServiceClient;
 
-            List<JSONPlaceHolderPostResponse> postsList = JsonConvert.DeserializeObject<List<JSONPlaceHolderPostResponse>>(response.Content);
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
-            postsList.Count.Should().Be(100, "because JSONPlaceHolder get all always returns 100 response objects");
+        [ClassInitialize]
+        public static void FixtureSetup(TestContext context)
+        {
+            _jsonPlaceHolderServiceClient = new JSONPlaceHolderServiceClient();
+        }
+
+        [TestMethod]
+        public async Task GetAllPosts_ShouldReturn200_ShouldReturn100PostObjects()
+        {
+            //Arrange 
+              // N/A
+
+            //Act
+            JSONPlaceHolderGetAllPostsResponse response = await _jsonPlaceHolderServiceClient.GetAllPosts();
+
+            //Assert
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
+            response.postObjectList.Count.Should().Be(100, "because JSONPlaceHolder get all always returns 100 response objects");
+            
             //Could do more assertions here based on AC of specific GetAll call API
      
         }
 
         [TestMethod]
-        public void GetOnePost_ShouldReturn200_ShouldReturnDesiredPostObject()
+        public async Task GetOnePost_ShouldReturn200_ShouldReturnDesiredPostObject()
         {
-            RestClient client = new RestClient("https://jsonplaceholder.typicode.com/");
-            RestRequest request = new RestRequest("posts/72");
-            var response = client.Get(request);
+            JSONPlaceHolderGetOnePostResponse response = await _jsonPlaceHolderServiceClient.GetOnePost("72");
 
-            JSONPlaceHolderPostResponse targetPost = JsonConvert.DeserializeObject<JSONPlaceHolderPostResponse>(response.Content);
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
-            targetPost.userId.Should().Be(8, "because we expect post id 72 has a userID value of 8");
-            targetPost.id.Should().Be(72, "because we expect post id 72 has a id value of 72");
-            targetPost.title.Should().Be("sint hic doloribus consequatur eos non id", "because we expect this title string value for post id 72");
-            targetPost.body.Should().Be("quam occaecati qui deleniti consectetur\nconsequatur aut facere quas exercitationem aliquam hic voluptas\nneque id sunt ut aut accusamus\nsunt consectetur expedita inventore velit", "because we expect this title string value for post id 72");
+            //Assert
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call was successful");
+            response.postObject.userId.Should().Be(8, "because we expect post id 72 has a userID value of 8");
+            response.postObject.id.Should().Be(72, "because we expect post id 72 has a id value of 72");
+            response.postObject.title.Should().Be("sint hic doloribus consequatur eos non id", "because we expect this title string value for post id 72");
+            response.postObject.body.Should().Be("quam occaecati qui deleniti consectetur\nconsequatur aut facere quas exercitationem aliquam hic voluptas\nneque id sunt ut aut accusamus\nsunt consectetur expedita inventore velit", "because we expect this title string value for post id 72");
             //Could do more assertions here based on AC of specific Get one call 
 
         }
