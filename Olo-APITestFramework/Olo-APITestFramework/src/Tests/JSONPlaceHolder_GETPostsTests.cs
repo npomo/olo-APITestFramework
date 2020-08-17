@@ -61,5 +61,31 @@ namespace Olo_APITestFramework
             //Could do more assertions here based on AC of specific Get one call 
 
         }
+
+        [TestMethod]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_GETEndpoints)]
+        [TestCategory(Constants.TestCategories.Full)]
+        [DataRow("101")]
+        [DataRow("text")]
+        public async Task GetOnePost_InvalidPostID_ShouldReturn404(string postId) 
+        {
+            //Arrange
+            // N/A
+
+            //Act
+            JSONPlaceHolderGetOnePostResponse response = await _jsonPlaceHolderServiceClient.GetOnePost(postId);
+
+            //Assert
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.NotFound, 
+                string.Format("because there should never be a post with ID {0}", postId));
+            response.postObject.userId.Should().Be(0, "because we did not find a valid Post");
+            response.postObject.id.Should().Be(0, "because we did not find a valid Post");
+            response.postObject.title.Should().BeNull("there is no title to return for an invalid PostID");
+            response.postObject.body.Should().BeNull("there is no body to return for an invalid PostID");
+
+
+        }
+
+
     }
 }

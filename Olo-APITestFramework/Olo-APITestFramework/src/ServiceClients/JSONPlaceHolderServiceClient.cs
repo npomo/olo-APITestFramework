@@ -41,7 +41,7 @@ namespace Olo_APITestFramework.src.ServiceClients
         {
             RestRequest request = new RestRequest(string.Format(getOnePostRoute, postId));
             Console.WriteLine(
-                string.Format("Calling JsonPlaceHolder GetOnePost with id {0} at: {1}/{2} ", postId, _restClient.BaseUrl, request.Resource));
+                string.Format("Calling JsonPlaceHolder GetOnePost with id {0} at: {1}{2} ", postId, _restClient.BaseUrl, request.Resource));
             var response = await _restClient.ExecuteGetAsync<JSONPlaceHolderPost>(request);
 
             return new JSONPlaceHolderGetOnePostResponse
