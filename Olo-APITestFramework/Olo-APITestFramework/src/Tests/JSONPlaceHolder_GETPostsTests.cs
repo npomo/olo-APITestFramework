@@ -23,6 +23,8 @@ namespace Olo_APITestFramework
         }
 
         [TestMethod]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_GETEndpoints)]
+        [TestCategory(Constants.TestCategories.Full)]
         public async Task GetAllPosts_ShouldReturn200_ShouldReturn100PostObjects()
         {
             //Arrange 
@@ -30,7 +32,7 @@ namespace Olo_APITestFramework
 
             //Act
             JSONPlaceHolderGetAllPostsResponse response = await _jsonPlaceHolderServiceClient.GetAllPosts();
-            System.Threading.Thread.Sleep(5000);
+
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call returned 200");
             response.postObjectList.Count.Should().Be(100, "because JSONPlaceHolder get all always returns 100 response objects");
@@ -40,6 +42,8 @@ namespace Olo_APITestFramework
         }
 
         [TestMethod]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_GETEndpoints)]
+        [TestCategory(Constants.TestCategories.Full)]
         public async Task GetOnePost_ShouldReturn200_ShouldReturnDesiredPostObject()
         {
             //Arrange
@@ -47,7 +51,6 @@ namespace Olo_APITestFramework
             
             //Act
             JSONPlaceHolderGetOnePostResponse response = await _jsonPlaceHolderServiceClient.GetOnePost("72");
-            System.Threading.Thread.Sleep(5000);
 
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call returned 200");
