@@ -1,4 +1,5 @@
-﻿using Olo_APITestFramework.src.Helpers;
+﻿using Newtonsoft.Json.Linq;
+using Olo_APITestFramework.src.Helpers;
 using Olo_APITestFramework.src.Models;
 using RestSharp;
 using System;
@@ -12,7 +13,8 @@ namespace Olo_APITestFramework.src.ServiceClients
         private RestClient _restClient { get; }
         private const string getAllPostsRoute = "posts";
         private const string getOnePostRoute = "posts/{0}";
-        
+        private const string postRoute = "posts";
+
         public JSONPlaceHolderServiceClient()
         {
             _restClient = AssemblyHelper.AUTRestClients["JSONPlaceHolder"];
@@ -50,5 +52,23 @@ namespace Olo_APITestFramework.src.ServiceClients
                 postObject = response.Data
             };
         }
+
+        public async Task<dynamic> PostNewPost(JObject postAsJSON)
+        {
+            RestRequest request = new RestRequest(postRoute);
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(postAsJSON);
+            Console.WriteLine(
+                string.Format("Calling JsonPlaceHolder Post at {0}/{1} with body\n: {2} ",
+                _restClient.BaseUrl, request.Resource, postAsJSON.ToString()));
+            dynamic response = await _restClient.ExecutePostAsync<dynamic>(request);
+
+            return new
+            {
+                statusCode = response.StatusCode,
+                postObject = response.Data
+            };
+        }
+
     }
 }
