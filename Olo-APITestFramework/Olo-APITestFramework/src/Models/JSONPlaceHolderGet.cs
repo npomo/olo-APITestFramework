@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Olo_APITestFramework.src.Models
 {
-    public class JSONPlaceHolderPost
+    public class JSONPlaceHolderGetObject
     {
         public int userId { get; set; }
         public int id { get; set; }
@@ -15,15 +15,15 @@ namespace Olo_APITestFramework.src.Models
 
     }
 
-    public class JSONPlaceHolderGetAllPostsResponse
+    public class JSONPlaceHolderGetAllResponse
     {
         public System.Net.HttpStatusCode statusCode { get; set; }
-        public List<JSONPlaceHolderPost> postObjectList{ get; set ;}
+        public List<JSONPlaceHolderGetObject> postObjectList{ get; set ;}
     }
 
-    public class JSONPlaceHolderGetOnePostResponse
+    public class JSONPlaceHolderGetOneResponse
     {
         public System.Net.HttpStatusCode statusCode { get; set; }
-        public JSONPlaceHolderPost postObject { get; set; }
+        public JSONPlaceHolderGetObject postObject { get; set; }
     }
 }

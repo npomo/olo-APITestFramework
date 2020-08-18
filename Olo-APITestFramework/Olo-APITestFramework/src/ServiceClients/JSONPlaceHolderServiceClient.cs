@@ -26,44 +26,45 @@ namespace Olo_APITestFramework.src.ServiceClients
             _restClient = restClient;
         }
 
-        public async Task<JSONPlaceHolderGetAllPostsResponse> GetAllPosts()
+        public async Task<JSONPlaceHolderGetAllResponse> GetAllPosts()
         {
             RestRequest request = new RestRequest(getAllPostsRoute);
             Console.WriteLine(string.Format("Calling JsonPlaceHolder GetAllPosts at: {0}/{1} ", _restClient.BaseUrl, request.Resource));
-            var response = await _restClient.ExecuteGetAsync<List<JSONPlaceHolderPost>>(request);
+            var response = await _restClient.ExecuteGetAsync<List<JSONPlaceHolderGetObject>>(request);
 
-            return new JSONPlaceHolderGetAllPostsResponse
+            return new JSONPlaceHolderGetAllResponse
             {
                 statusCode = response.StatusCode,
                 postObjectList = response.Data
             };
         }
 
-        public async Task<JSONPlaceHolderGetOnePostResponse> GetOnePost(string postId)
+        public async Task<JSONPlaceHolderGetOneResponse> GetOnePost(string postId)
         {
             RestRequest request = new RestRequest(string.Format(getOnePostRoute, postId));
             Console.WriteLine(
                 string.Format("Calling JsonPlaceHolder GetOnePost with id {0} at: {1}{2} ", postId, _restClient.BaseUrl, request.Resource));
-            var response = await _restClient.ExecuteGetAsync<JSONPlaceHolderPost>(request);
+            var response = await _restClient.ExecuteGetAsync<JSONPlaceHolderGetObject>(request);
 
-            return new JSONPlaceHolderGetOnePostResponse
+            return new JSONPlaceHolderGetOneResponse
             {
                 statusCode = response.StatusCode,
                 postObject = response.Data
             };
         }
 
-        public async Task<dynamic> PostNewPost(JObject postAsJSON)
+        public async Task<JSONPlaceHolderPostOneResponse> PostNewPost(JSONPlaceHolderPostObject postObj)
         {
             RestRequest request = new RestRequest(postRoute);
             request.AddHeader("Accept", "application/json");
-            request.AddJsonBody(postAsJSON);
+            request.AddJsonBody(postObj);
+            //request.AddParameter("application/json", postObj, ParameterType.RequestBody);
             Console.WriteLine(
-                string.Format("Calling JsonPlaceHolder Post at {0}/{1} with body\n: {2} ",
-                _restClient.BaseUrl, request.Resource, postAsJSON.ToString()));
-            dynamic response = await _restClient.ExecutePostAsync<dynamic>(request);
+                string.Format("Calling JsonPlaceHolder Post at {0}{1} with body\n: {2} ",
+                _restClient.BaseUrl, request.Resource, postObj.ToString()));
+            var response = await _restClient.ExecutePostAsync<JSONPlaceHolderPostObject>(request);
 
-            return new
+            return new JSONPlaceHolderPostOneResponse
             {
                 statusCode = response.StatusCode,
                 postObject = response.Data

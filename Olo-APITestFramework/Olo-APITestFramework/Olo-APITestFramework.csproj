@@ -76,9 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Helpers\AssemblyHelper.cs" />
-    <Compile Include="src\Helpers\TestData.cs" />
     <Compile Include="src\Helpers\Constants.cs" />
-    <Compile Include="src\Models\JSONPlaceHolderPostResponse.cs" />
+    <Compile Include="src\Models\JSONPlaceHolderPost.cs" />
+    <Compile Include="src\Models\JSONPlaceHolderGet.cs" />
     <Compile Include="src\ServiceClients\JSONPlaceHolderServiceClient.cs" />
     <Compile Include="src\Tests\JSONPlaceHolder_POSTPostsTests.cs" />
     <Compile Include="src\Tests\JSONPlaceHolder_GETPostsTests.cs" />
