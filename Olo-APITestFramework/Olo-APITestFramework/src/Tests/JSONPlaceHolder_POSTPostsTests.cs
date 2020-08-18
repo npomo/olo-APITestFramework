@@ -53,5 +53,23 @@ namespace Olo_APITestFramework
 
         }
 
+        [TestMethod]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_POSTEndpoints)]
+        [TestCategory(Constants.TestCategories.Full)]
+        [TestCategory(Constants.TestCategories.Smoke)]
+        public async Task PostWithEmptyBody_ShouldReturn201_ShouldReturnId101()
+        {
+            //Arrange
+                // N/A
+
+            //Act
+            var response = await _jsonPlaceHolderServiceClient.PostNewPost();
+
+            //Assert
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.Created, "because the Post was successful and returned 201");
+            response.postObject.id.Should().Be(101, "because all new posts get a root level id of 101");
+            //Could do more assertions here based on AC of specific Get one call 
+
+        }
     }
 }

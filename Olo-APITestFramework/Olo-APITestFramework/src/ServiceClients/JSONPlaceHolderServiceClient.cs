@@ -53,15 +53,16 @@ namespace Olo_APITestFramework.src.ServiceClients
             };
         }
 
-        public async Task<JSONPlaceHolderPostOneResponse> PostNewPost(JSONPlaceHolderPostObject postObj)
+        public async Task<JSONPlaceHolderPostOneResponse> PostNewPost(JSONPlaceHolderPostObject postObj = null)
         {
             RestRequest request = new RestRequest(postRoute);
             request.AddHeader("Accept", "application/json");
-            request.AddJsonBody(postObj);
-            //request.AddParameter("application/json", postObj, ParameterType.RequestBody);
+            
+            if (postObj != null) { request.AddJsonBody(postObj); }
+            
             Console.WriteLine(
                 string.Format("Calling JsonPlaceHolder Post at {0}{1} with body\n: {2} ",
-                _restClient.BaseUrl, request.Resource, postObj.ToString()));
+                _restClient.BaseUrl, request.Resource, postObj != null ? postObj.ToString() : "<no body>"));
             var response = await _restClient.ExecutePostAsync<JSONPlaceHolderPostObject>(request);
 
             return new JSONPlaceHolderPostOneResponse
