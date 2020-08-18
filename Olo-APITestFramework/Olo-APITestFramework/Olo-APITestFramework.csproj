@@ -54,6 +54,7 @@
     <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.10.3\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.1.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -76,8 +77,10 @@
   <ItemGroup>
     <Compile Include="src\Helpers\AssemblyHelper.cs" />
     <Compile Include="src\Helpers\Constants.cs" />
-    <Compile Include="src\Models\JSONPlaceHolderPostResponse.cs" />
+    <Compile Include="src\Models\JSONPlaceHolderPost.cs" />
+    <Compile Include="src\Models\JSONPlaceHolderGet.cs" />
     <Compile Include="src\ServiceClients\JSONPlaceHolderServiceClient.cs" />
+    <Compile Include="src\Tests\JSONPlaceHolder_POSTPostsTests.cs" />
     <Compile Include="src\Tests\JSONPlaceHolder_GETPostsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -31,7 +31,7 @@ namespace Olo_APITestFramework
               // N/A
 
             //Act
-            JSONPlaceHolderGetAllPostsResponse response = await _jsonPlaceHolderServiceClient.GetAllPosts();
+            JSONPlaceHolderGetAllResponse response = await _jsonPlaceHolderServiceClient.GetAllPosts();
 
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call returned 200");
@@ -50,7 +50,7 @@ namespace Olo_APITestFramework
               // N/A
             
             //Act
-            JSONPlaceHolderGetOnePostResponse response = await _jsonPlaceHolderServiceClient.GetOnePost("72");
+            JSONPlaceHolderGetOneResponse response = await _jsonPlaceHolderServiceClient.GetOnePost("72");
 
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Get call returned 200");
@@ -73,7 +73,7 @@ namespace Olo_APITestFramework
             // N/A
 
             //Act
-            JSONPlaceHolderGetOnePostResponse response = await _jsonPlaceHolderServiceClient.GetOnePost(postId);
+            JSONPlaceHolderGetOneResponse response = await _jsonPlaceHolderServiceClient.GetOnePost(postId);
 
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.NotFound, 
