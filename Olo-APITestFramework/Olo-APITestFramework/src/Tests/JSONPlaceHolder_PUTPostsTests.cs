@@ -14,7 +14,7 @@ using System.Web.Configuration;
 namespace Olo_APITestFramework
 {
     [TestClass]
-    public class JSONPlaceHolder_POSTPostsTests
+    public class JSONPlaceHolder_PUTPostsTests
     {
         private static JSONPlaceHolderServiceClient _jsonPlaceHolderServiceClient;
 
@@ -28,28 +28,30 @@ namespace Olo_APITestFramework
         [TestCategory(Constants.TestCategories.JSONPlaceHolder_POSTEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
         [TestCategory(Constants.TestCategories.Smoke)]
-        public async Task PostBasicPost_ShouldReturn201_ShouldReturnPostedObject()
+        public async Task PutBasicPost_ShouldReturn200_ShouldReturnPutObject()
         {
             //Arrange
             JSONPlaceHolderPostObject postObj = new JSONPlaceHolderPostObject
             {
-                body = "body",
-                title = "this is our title",
+                body = "putBody",
+                title = "the title",
                 nestedEl = new NestedPostElement
                 {
-                    custom1 = "more custom fields",
+                    custom1 = "custom field value 1",
                     custom2 = "even more custom fields"
                 },
                 userId = Guid.NewGuid()
             };
+            string postId = "50";
 
             //Act
-            var response = await _jsonPlaceHolderServiceClient.PostNewPost(postObj);
+            var response = await _jsonPlaceHolderServiceClient.PutExistingPost(postId, postObj);
             
             //Assert
-            response.statusCode.Should().Be(System.Net.HttpStatusCode.Created, "because the Post was successful and returned 201");
-            response.postObject.id.Should().Be(101, "because all new posts get a root level id of 101");
-            //Could do more assertions here on response body values
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Put was successful and returned 200");
+            response.postObject.id.Should().Be(Int32.Parse(postId), string.Format("because we performed the PUT method on id {0}", postId));
+            response.postObject.Should().BeOfType<JSONPlaceHolderPostObject>("because the Put call should have updated the body of id 50");
+            //Could do more assertions here based on AC of specific Get one call 
 
         }
 
@@ -57,18 +59,20 @@ namespace Olo_APITestFramework
         [TestCategory(Constants.TestCategories.JSONPlaceHolder_POSTEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
         [TestCategory(Constants.TestCategories.Smoke)]
-        public async Task PostWithEmptyBody_ShouldReturn201_ShouldReturnId101()
+        public async Task PutWithEmptyBody_ShouldReturn200_ShouldReturnId()
         {
             //Arrange
-                // N/A
+            string postId = "35";
 
             //Act
-            var response = await _jsonPlaceHolderServiceClient.PostNewPost();
+            var response = await _jsonPlaceHolderServiceClient.PutExistingPost(postId);
 
             //Assert
-            response.statusCode.Should().Be(System.Net.HttpStatusCode.Created, "because the Post was successful and returned 201");
-            response.postObject.id.Should().Be(101, "because all new posts get a root level id of 101");
-            
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Put was successful and returned 200");
+            response.postObject.id.Should().Be(Int32.Parse(postId), 
+                string.Format("because we performed the PUT method on id {0} and thus that ID was returned", postId));
+ 
+            //Could do more assertions here based on AC of specific Get one call 
 
         }
     }

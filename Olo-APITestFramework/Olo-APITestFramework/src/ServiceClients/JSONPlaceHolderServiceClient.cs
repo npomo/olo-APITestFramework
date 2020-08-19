@@ -14,6 +14,7 @@ namespace Olo_APITestFramework.src.ServiceClients
         private const string getAllPostsRoute = "posts";
         private const string getOnePostRoute = "posts/{0}";
         private const string postRoute = "posts";
+        private const string putRoute = "posts/{0}";
 
         public JSONPlaceHolderServiceClient()
         {
@@ -64,6 +65,25 @@ namespace Olo_APITestFramework.src.ServiceClients
                 string.Format("Calling JsonPlaceHolder Post at {0}{1} with body\n: {2} ",
                 _restClient.BaseUrl, request.Resource, postObj != null ? postObj.ToString() : "<no body>"));
             var response = await _restClient.ExecutePostAsync<JSONPlaceHolderPostObject>(request);
+
+            return new JSONPlaceHolderPostOneResponse
+            {
+                statusCode = response.StatusCode,
+                postObject = response.Data
+            };
+        }
+
+        public async Task<JSONPlaceHolderPostOneResponse> PutExistingPost(string postId, JSONPlaceHolderPostObject postObj = null)
+        {
+            RestRequest request = new RestRequest(string.Format(putRoute, postId));
+            request.AddHeader("Accept", "application/json");
+
+            if (postObj != null) { request.AddJsonBody(postObj); }
+
+            Console.WriteLine(
+                string.Format("Calling JsonPlaceHolder Put at {0}{1} with body\n: {2} for id {3} ",
+                _restClient.BaseUrl, request.Resource, postObj != null ? postObj.ToString() : "<no body>", postId));
+            var response = await _restClient.ExecuteAsync<JSONPlaceHolderPostObject>(request, Method.PUT);
 
             return new JSONPlaceHolderPostOneResponse
             {

@@ -80,6 +80,7 @@
     <Compile Include="src\Models\JSONPlaceHolderPost.cs" />
     <Compile Include="src\Models\JSONPlaceHolderGet.cs" />
     <Compile Include="src\ServiceClients\JSONPlaceHolderServiceClient.cs" />
+    <Compile Include="src\Tests\JSONPlaceHolder_PUTPostsTests.cs" />
     <Compile Include="src\Tests\JSONPlaceHolder_POSTPostsTests.cs" />
     <Compile Include="src\Tests\JSONPlaceHolder_GETPostsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
