@@ -12,6 +12,8 @@ namespace Olo_APITestFramework.src.Helpers
         {
             public const string JSONPlaceHolder_GETEndpoints = "JSONPlaceHolder_GetEndpoints";
             public const string JSONPlaceHolder_POSTEndpoints = "JSONPlaceHolder_PostEndpoints";
+            public const string JSONPlaceHolder_PUTEndpoints = "JSONPlaceHolder_PutEndpoints";
+            public const string JSONPlaceHolder_DELETEEndpoints = "JSONPlaceHolder_PutEndpoints";
             public const string Smoke = "Smoke";
             public const string Full = "Full";
         }

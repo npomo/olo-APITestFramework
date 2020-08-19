@@ -15,6 +15,7 @@ namespace Olo_APITestFramework.src.ServiceClients
         private const string getOnePostRoute = "posts/{0}";
         private const string postRoute = "posts";
         private const string putRoute = "posts/{0}";
+        private const string deleteRoute = "posts/{0}";
 
         public JSONPlaceHolderServiceClient()
         {
@@ -73,7 +74,7 @@ namespace Olo_APITestFramework.src.ServiceClients
             };
         }
 
-        public async Task<JSONPlaceHolderPostOneResponse> PutExistingPost(string postId, JSONPlaceHolderPostObject postObj = null)
+        public async Task<JSONPlaceHolderPostOneResponse> PutPost(string postId, JSONPlaceHolderPostObject postObj = null)
         {
             RestRequest request = new RestRequest(string.Format(putRoute, postId));
             request.AddHeader("Accept", "application/json");
@@ -90,6 +91,19 @@ namespace Olo_APITestFramework.src.ServiceClients
                 statusCode = response.StatusCode,
                 postObject = response.Data
             };
+        }
+
+        public async Task<IRestResponse> DeletePost(string postId)
+        {
+            RestRequest request = new RestRequest(string.Format(deleteRoute, postId));
+            request.AddHeader("Accept", "application/json");
+
+           Console.WriteLine(
+                string.Format("Calling JsonPlaceHolder Delete at {0}{1} for id {2} ",
+                _restClient.BaseUrl, request.Resource, postId));
+            var response = await _restClient.ExecuteAsync(request, Method.DELETE);
+
+            return response;
         }
 
     }

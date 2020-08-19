@@ -25,7 +25,7 @@ namespace Olo_APITestFramework
         }
 
         [TestMethod]
-        [TestCategory(Constants.TestCategories.JSONPlaceHolder_POSTEndpoints)]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_PUTEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
         [TestCategory(Constants.TestCategories.Smoke)]
         public async Task PutBasicPost_ShouldReturn200_ShouldReturnPutObject()
@@ -45,34 +45,60 @@ namespace Olo_APITestFramework
             string postId = "50";
 
             //Act
-            var response = await _jsonPlaceHolderServiceClient.PutExistingPost(postId, postObj);
+            var response = await _jsonPlaceHolderServiceClient.PutPost(postId, postObj);
             
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Put was successful and returned 200");
             response.postObject.id.Should().Be(Int32.Parse(postId), string.Format("because we performed the PUT method on id {0}", postId));
-            response.postObject.Should().BeOfType<JSONPlaceHolderPostObject>("because the Put call should have updated the body of id 50");
-            //Could do more assertions here based on AC of specific Get one call 
+            response.postObject.Should().BeOfType<JSONPlaceHolderPostObject>
+                (string.Format("because the Put call should have updated the body of id {0}", postId));
+            //Could do more assertions here on the response body
 
         }
 
         [TestMethod]
-        [TestCategory(Constants.TestCategories.JSONPlaceHolder_POSTEndpoints)]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_PUTEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
-        [TestCategory(Constants.TestCategories.Smoke)]
         public async Task PutWithEmptyBody_ShouldReturn200_ShouldReturnId()
         {
             //Arrange
             string postId = "35";
 
             //Act
-            var response = await _jsonPlaceHolderServiceClient.PutExistingPost(postId);
+            var response = await _jsonPlaceHolderServiceClient.PutPost(postId);
 
             //Assert
             response.statusCode.Should().Be(System.Net.HttpStatusCode.OK, "because the Put was successful and returned 200");
             response.postObject.id.Should().Be(Int32.Parse(postId), 
                 string.Format("because we performed the PUT method on id {0} and thus that ID was returned", postId));
  
-            //Could do more assertions here based on AC of specific Get one call 
+        }
+
+        [TestMethod]
+        [TestCategory(Constants.TestCategories.JSONPlaceHolder_PUTEndpoints)]
+        [TestCategory(Constants.TestCategories.Full)]
+        public async Task PutInvalidID_ShouldReturn404()
+        {
+            //Arrange
+            JSONPlaceHolderPostObject postObj = new JSONPlaceHolderPostObject
+            {
+                body = "putBody",
+                title = "the title",
+                nestedEl = new NestedPostElement
+                {
+                    custom1 = "custom field value 1",
+                    custom2 = "even more custom fields"
+                },
+                userId = Guid.NewGuid()
+            };
+            string postId = "101";
+
+            //Act
+            var response = await _jsonPlaceHolderServiceClient.PutPost(postId, postObj);
+
+            //Assert
+            response.statusCode.Should().Be(System.Net.HttpStatusCode.NotFound, 
+                string.Format("because postObject with Id {0} does not exist in the system and thus it cannot be updated", postId));
 
         }
     }
