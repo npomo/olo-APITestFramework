@@ -56,7 +56,6 @@ namespace Olo_APITestFramework
         [TestMethod]
         [TestCategory(Constants.TestCategories.JSONPlaceHolder_POSTEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
-        [TestCategory(Constants.TestCategories.Smoke)]
         public async Task PostWithEmptyBody_ShouldReturn201_ShouldReturnId101()
         {
             //Arrange

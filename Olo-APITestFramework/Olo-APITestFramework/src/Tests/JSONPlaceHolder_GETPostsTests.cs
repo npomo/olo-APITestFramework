@@ -25,6 +25,7 @@ namespace Olo_APITestFramework
         [TestMethod]
         [TestCategory(Constants.TestCategories.JSONPlaceHolder_GETEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
+        [TestCategory(Constants.TestCategories.Smoke)]
         public async Task GetAllPosts_ShouldReturn200_ShouldReturn100PostObjects()
         {
             //Arrange 
@@ -44,6 +45,7 @@ namespace Olo_APITestFramework
         [TestMethod]
         [TestCategory(Constants.TestCategories.JSONPlaceHolder_GETEndpoints)]
         [TestCategory(Constants.TestCategories.Full)]
+        [TestCategory(Constants.TestCategories.Smoke)]
         public async Task GetOnePost_ShouldReturn200_ShouldReturnDesiredPostObject()
         {
             //Arrange
