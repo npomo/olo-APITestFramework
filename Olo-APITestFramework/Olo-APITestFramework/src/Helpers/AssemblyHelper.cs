@@ -21,6 +21,7 @@ namespace Olo_APITestFramework.src.Helpers
 		//  - reads in all URLs from App.Config 
 		//  - creates a dictionary of RestSharp clients that will be used by all tests in this project.  
 		//      **Each dictionary entry is one client for each base URL defined in app.config
+		//This is a comment with new changes
 		[AssemblyInitialize]
 		public static void Initialize(TestContext context)
         {
