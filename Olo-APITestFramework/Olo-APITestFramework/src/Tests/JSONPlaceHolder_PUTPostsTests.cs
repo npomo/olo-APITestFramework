@@ -13,7 +13,8 @@ using System.Web.Configuration;
 
 //master commit 5
 //master commit 6
-//master commit 7
+//new branch commit 7
+//new branch commit 8
 namespace Olo_APITestFramework
 {
     [TestClass]
