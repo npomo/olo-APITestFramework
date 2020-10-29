@@ -31,6 +31,8 @@ namespace Olo_APITestFramework
         public async Task PostBasicPost_ShouldReturn201_ShouldReturnPostedObject()
         {
             //Arrange
+            //this ought to be a conflict
+            //this is a conflict
             JSONPlaceHolderPostObject postObj = new JSONPlaceHolderPostObject
             {
                 body = "body",
