@@ -29,4 +29,6 @@ namespace Olo_APITestFramework.src.Models
         public System.Net.HttpStatusCode statusCode { get; set; }
         public JSONPlaceHolderGetObject postObject { get; set; }
     }
+
+    //newbranch commit 9
 }
