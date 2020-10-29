@@ -19,6 +19,7 @@ namespace Olo_APITestFramework
     {
         private static JSONPlaceHolderServiceClient _jsonPlaceHolderServiceClient;
 
+        //newbranch commit 2
         [ClassInitialize]
         public static void FixtureSetup(TestContext context)
         {
